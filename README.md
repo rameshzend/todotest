@@ -1,7 +1,7 @@
 Todo test:
 =========
 
-Following backend functionality has been completed:
+Following backend functionality has been completed and tested in postman
 
 - A to-do item must contain title, body, due date (optional), media/attachment, reminders (see below) and a complete/incomplete flag - done
 - Must be able to fetch items with a complete/incomplete filter - done
