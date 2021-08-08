@@ -1,6 +1,54 @@
-Curl examples:
+Todo test:
+=========
 
-Login:
+Following backend functionality has been completed:
+
+- A to-do item must contain title, body, due date (optional), media/attachment, reminders (see below) and a complete/incomplete flag - done
+- Must be able to fetch items with a complete/incomplete filter - done
+- Must be able to create to-do items - done
+- Must be able to edit to-do items - done
+- Must be able to delete to-do items - done
+- Must be able to mark a to-do item as done (so it is returned in the done list) - done
+- To-do items should be ordered by due date (if set) - done
+- Creators can opt-in to reminders (e.g. 1 day before, 2 weeks before etc), at which point an email is sent to the item owner - done
+- User registration not required, sample user(s) can be seeded - done
+
+I have implemented laravel's natively supported passport authentication for securing the RESTApi
+Other approaches for securing the RESTApi can be JSON Web Token (JWT), Lumen micro servive api gateway
+
+Files created:
+------------------------
+
+cronjob for reminders
+-------------------------
+app/Console/Commands/ReminderCron.php
+app/Console/Kernel.php
+
+controllers
+-----------
+app/Http/Controllers/Api/AuthController.php
+app/Http/Controllers/Api/TaskController.php
+app/Http/Controllers/TaskSchedulerController.php
+
+Models
+------
+app/Models/Task.php
+app/Models/User.php
+
+views
+-----
+resources/views/reminders/todo_task.blade.php
+
+migrations
+----------
+database/migrations
+
+
+Curl examples:
+=============
+
+Login
+-----
 Request:
 curl --location --request POST 'http://restpassport/api/login' \
 --header 'Accept: application/json' \
@@ -21,7 +69,8 @@ Response:
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYjI1YWVlYTE4MmVmYTVkNGVlZThkYzc1YmNlNmIxOGI0MzEyZmU5OGMwNjI1ZDA5ZGUwM2RlMzljYjY5MDIxZTIxNGNjMTRmMTZkOTFkM2MiLCJpYXQiOjE2Mjg0MzcxMDcuNzEwMzcyOTI0ODA0Njg3NSwibmJmIjoxNjI4NDM3MTA3LjcxMDM4NjAzNzgyNjUzODA4NTkzNzUsImV4cCI6MTY1OTk3MzEwNy40Mjg1NDU5NTE4NDMyNjE3MTg3NSwic3ViIjoiMSIsInNjb3BlcyI6W119.yhEhWEo4fyxJA8-K3zsp2J_BaDK_PnS7WMYIWW5Q3UsGczHOhUKZt2MxMM4RgaVti-gkgNYvZyjAYAPsSRxFgTAgLtL0FmJfTySOUGkntrSs0yD5AyQBTxT9OewRWAOjr69Zf8mRlTqAvv_sC0uQUzQTGOzkp6XPyWAwh2wDKtrRhSRqWhEkyZKbidagDMnWT0lH-mbHuaLqkSejGiUVq4Ovz27bSWba-baqC5tYA8QBdRQlEWC25TV8ZfpU0HxXsp0r17FpST7iT3S5VxKPoez_I1Eoz0SxcQxfkEVpI3eg68iqLBdJvgI6VWqDVJCR3bhHrQ0UWU8VP7h7j_7O3SHg3I_MI1ZTjE-BSKb6L_dI7Y_tutBYU_gB5KHFOX6jTP-TeXMSFprzWfRVFi_1CoGM53Xoejkm3zXVkhI3eYWGEYROTqPG3ZmF6-CSrYSmoS6aZ9pLx9h-m6frH5PtpoI2VbDr09i6CVlJqDggVPQiW-qFgqbSZTcSne3MTwrf47fiv0y_3k5hyGzF7YQSPA1JvlJVFccaIhHKm_TMA1iDit1Xzvvq_FFx2uBo2Uy8VlYSBZ6KWmBW07d-kAO-5e0VSMldGLpXEqBOIQFXytFB3iqkyJ2QCK850vW-7FT-3UkvoGaTY8jTVA3VoMsuZ_Vv2jhfrqf1W8HAjO9QcDk"
 }
 
-Get all todos:
+Get all todo tasks
+------------------
 Request:
 curl --location --request GET 'http://todotest/api/tasks/' \
 --header 'Accept: application/json' \
@@ -60,7 +109,8 @@ Response:
     "message": "Tasks have been retrieved successfully"
 }
  
-Create todo:
+Create todo task
+----------------
 Request:
 curl --location --request POST 'http://todotest/api/tasks' \
 --header 'Accept: application/json' \
@@ -88,7 +138,8 @@ Response:
     "message": "Task has been created successfully"
 }
 
-Update todo:
+Update todo task
+----------------
 Request:
 curl --location --request PUT 'http://todotest/api/tasks/1' \
 --header 'Accept: application/json' \
@@ -117,7 +168,8 @@ Response:
     "message": "Task has been updated successfully"
 }
 
-Delete todo task:
+Delete todo task
+----------------
 Request:
 curl --location --request DELETE 'http://todotest/api/tasks/1' \
 --header 'Accept: application/json' \
