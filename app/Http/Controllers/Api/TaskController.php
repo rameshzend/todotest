@@ -26,6 +26,17 @@ class TaskController extends Controller
             $tasks = $tasks->where('status', $request->status);
         }
 
+        /**
+         * Sort todo tasks by due date, title, body 
+         */
+        if ($request->has('sort_by') && $request->sort_by != null) {
+            if ($request->has('sort_type') && $request->sort_type == 'desc') {
+                $tasks = $tasks->sortByDesc($request->sort_by);
+            }else{
+                $tasks = $tasks->sortBy($request->sort_by);
+            }
+        }
+
         return response(['tasks' => TaskResource::collection($tasks), 'message' => 'Tasks have been retrieved successfully'], 200);
     }
 
@@ -54,6 +65,17 @@ class TaskController extends Controller
         $reminderDate = $this->getReminderDate($request->due_date, $request->reminders);
 
         $data['reminder_date'] = $reminderDate;
+
+        /**
+         * Handle the attachment
+         */
+
+        if ($file = $request->file('attachment')) {
+            $name = time().$file->getClientOriginalName();
+            $file->move('attachments', $name);
+
+            $data['attachment'] = $name;
+        }
 
         $task = Task::create($data);
 
